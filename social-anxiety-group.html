@@ -75,21 +75,9 @@ h2{font-size:clamp(2.5rem,5vw,3.9rem);margin-top:12px;text-wrap:balance}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;list-style:none}
 .chips li{display:inline-flex;align-items:center;gap:8px;background:rgba(236,235,243,.09);border:1px solid rgba(236,235,243,.18);color:var(--mist-100);padding:7px 16px;border-radius:var(--r-pill);font-size:.97rem;font-weight:700}
 .chips li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--amber)}
-.art{width:100%;max-width:430px;justify-self:center;aspect-ratio:1}
-.art svg{width:100%;height:100%;overflow:visible}
-.ring{fill:none;stroke:rgba(236,235,243,.2);stroke-width:15}
-.ring.r2{stroke:rgba(236,235,243,.3)}.ring.r3{stroke:rgba(236,235,243,.42)}.ring.r4{stroke:rgba(236,235,243,.58)}
-.ring-core{fill:var(--blush)}
-.ring-part{fill:none;stroke:var(--amber);stroke-width:15;stroke-linecap:round}
-.ring-dot{fill:var(--amber)}
-.js .ring{animation:draw 1.8s var(--ease) backwards}
-.js .ring.r2{animation-delay:.15s}.js .ring.r3{animation-delay:.3s}.js .ring.r4{animation-delay:.45s}
-.js .ring-core{opacity:0;animation:fade .9s ease .9s forwards}
-.js .ring-part{stroke-dasharray:0 100;animation:part 1.6s var(--ease) 1.1s forwards}
-.js .ring-dot{opacity:0;animation:fade .7s ease 2.5s forwards}
-@keyframes draw{from{stroke-dasharray:1 1;stroke-dashoffset:1}to{stroke-dasharray:1 1;stroke-dashoffset:0}}
-@keyframes part{to{stroke-dasharray:27 73}}
-@keyframes fade{to{opacity:1}}
+.art{width:100%;max-width:460px;justify-self:center}
+.art img{width:100%;height:auto;opacity:0;animation:artIn 1.6s var(--ease) .2s forwards}
+@keyframes artIn{to{opacity:.2}}
 
 /* חשיפה בגלילה */
 .js .reveal{opacity:0;transform:translateY(22px);transition:opacity var(--dur-slow) var(--ease),transform var(--dur-slow) var(--ease)}
@@ -200,7 +188,7 @@ footer p{font-size:.88rem;color:rgba(229,164,154,.75)}
 
 @media(max-width:960px){
 .hero-grid{grid-template-columns:1fr;gap:34px;padding-top:150px;padding-bottom:84px;min-height:0}
-.art{max-width:250px;order:-1}
+.art{display:none}
 .intro-grid,.contact-grid{grid-template-columns:1fr;gap:44px}
 .facts{gap:12px}
 .prices{grid-template-columns:1fr}
@@ -211,7 +199,7 @@ body{font-size:17px;padding-bottom:68px}
 section{padding:76px 0}
 .top img{height:74px}.top .wrap{padding-top:18px;padding-bottom:18px}
 .back{font-size:.9rem;padding:8px 14px}
-.hero-grid{padding-top:112px;padding-bottom:64px;gap:26px}.art{max-width:210px}
+.hero-grid{padding-top:112px;padding-bottom:64px;gap:26px}
 .hero-actions .btn{width:100%}
 .work-list,.team-grid,.steps{grid-template-columns:1fr}
 .work-list{gap:0}
@@ -234,8 +222,7 @@ section{padding:76px 0}
 @media(prefers-reduced-motion:reduce){
 html{scroll-behavior:auto}
 .js .reveal{opacity:1;transform:none;transition:none}
-.js .ring,.js .ring-core,.js .ring-part,.js .ring-dot{animation:none;opacity:1}
-.js .ring-part{stroke-dasharray:27 73}
+.art img{animation:none;opacity:.2}
 *{transition:none!important}
 }
 </style>
@@ -268,17 +255,7 @@ html{scroll-behavior:auto}
 <li>כ-8 משתתפים ומשתתפות</li>
 </ul>
 </div>
-<div class="art" aria-hidden="true">
-<svg viewBox="0 0 400 400" focusable="false">
-<circle class="ring" cx="200" cy="200" r="168" pathLength="1"/>
-<circle class="ring r2" cx="200" cy="200" r="130" pathLength="1"/>
-<circle class="ring r3" cx="200" cy="200" r="92" pathLength="1"/>
-<circle class="ring r4" cx="200" cy="200" r="54" pathLength="1"/>
-<circle class="ring-core" cx="200" cy="200" r="20"/>
-<circle class="ring-part" cx="200" cy="200" r="130" pathLength="100" transform="rotate(-62 200 200)"/>
-<circle class="ring-dot" cx="306.5" cy="274.6" r="9"/>
-</svg>
-</div>
+<div class="art" aria-hidden="true"><img src="img/rings-light.png" alt="" width="560" height="534"></div>
 </div>
 </section>
 
