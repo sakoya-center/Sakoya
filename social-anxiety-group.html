@@ -52,29 +52,25 @@ h2{font-size:clamp(2.5rem,5vw,3.9rem);margin-top:12px;text-wrap:balance}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:var(--font-text);font-weight:700;font-size:1.05rem;line-height:1.2;text-decoration:none;padding:16px 30px;border-radius:var(--r-pill);border:2px solid transparent;cursor:pointer;transition:background var(--dur) var(--ease),color var(--dur) var(--ease),border-color var(--dur) var(--ease),transform var(--dur) var(--ease)}
 .btn-amber{background:var(--amber);color:var(--bark)}
 .btn-amber:hover{background:var(--amber-200);transform:translateY(-1px)}
-.btn-ghost{border-color:rgba(236,235,243,.5);color:var(--mist-100);background:transparent}
-.btn-ghost:hover{background:var(--mist-100);color:var(--pine);border-color:var(--mist-100)}
 .btn-pine{background:var(--pine);color:#fff}.btn-pine:hover{background:var(--bark)}
 
 /* פס עליון */
 .top{position:absolute;top:0;right:0;left:0;z-index:5}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:26px;padding-bottom:26px}
 .top img{height:93px;width:auto}
-.back{display:inline-flex;align-items:center;gap:8px;color:var(--mist-100);text-decoration:none;font-weight:700;font-size:.98rem;padding:10px 18px;border-radius:var(--r-pill);border:1.5px solid rgba(236,235,243,.35);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.top-actions{display:flex;align-items:center;gap:10px}
+.back{display:inline-flex;align-items:center;color:var(--mist-100);text-decoration:none;font-weight:700;font-size:.98rem;padding:11px 20px;border-radius:var(--r-pill);border:1.5px solid rgba(236,235,243,.4);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
 .back:hover{background:var(--mist-100);color:var(--pine)}
-.back .ico{width:16px;height:16px}
+.top-cta{display:inline-flex;align-items:center;background:var(--amber);color:var(--bark);text-decoration:none;font-weight:700;font-size:.98rem;padding:11px 24px;border-radius:var(--r-pill);border:1.5px solid var(--amber);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease)}
+.top-cta:hover{background:var(--amber-200);border-color:var(--amber-200)}
 
 /* פתיח */
 .hero{position:relative;background:var(--pine);color:var(--mist-100);overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center;padding-top:168px;padding-bottom:120px;min-height:min(94vh,840px)}
+.hero-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:center;padding-top:168px;padding-bottom:120px;min-height:min(86vh,780px)}
 .hero .label{color:var(--blush)}
 .hero h1{color:var(--mist-100);font-size:clamp(3.5rem,8.4vw,6.6rem);margin:20px 0 28px;line-height:.95}
 .hero h1 span{display:block;color:var(--blush)}
 .hero-q{font-size:clamp(1.15rem,2vw,1.4rem);line-height:1.65;color:var(--mist);max-width:31em;padding-right:22px;border-right:3px solid var(--amber)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;list-style:none}
-.chips li{display:inline-flex;align-items:center;gap:8px;background:rgba(236,235,243,.09);border:1px solid rgba(236,235,243,.18);color:var(--mist-100);padding:7px 16px;border-radius:var(--r-pill);font-size:.97rem;font-weight:700}
-.chips li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--amber)}
 .art{width:100%;max-width:460px;justify-self:center}
 .art img{width:100%;height:auto;opacity:0;animation:artIn 1.6s var(--ease) .2s forwards}
 @keyframes artIn{to{opacity:.2}}
@@ -198,9 +194,8 @@ body{font-size:17px;padding-bottom:68px}
 .wrap{padding:0 22px}
 section{padding:76px 0}
 .top img{height:74px}.top .wrap{padding-top:18px;padding-bottom:18px}
-.back{font-size:.9rem;padding:8px 14px}
+.top-actions{gap:8px}.back,.top-cta{font-size:.84rem;padding:8px 13px}.hide-sm{display:none}
 .hero-grid{padding-top:112px;padding-bottom:64px;gap:26px}
-.hero-actions .btn{width:100%}
 .work-list,.team-grid,.steps{grid-template-columns:1fr}
 .work-list{gap:0}
 .work-list li{padding:26px 0;gap:18px}
@@ -215,7 +210,7 @@ section{padding:76px 0}
 .form-card{padding:30px 22px}
 .guide{padding:34px 24px}
 .qbar{display:flex;position:fixed;bottom:0;right:0;left:0;z-index:900;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(30,58,29,.97);box-shadow:0 -6px 22px rgba(52,27,15,.2)}
-.qbar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 10px;border-radius:var(--r-pill);font-weight:700;font-size:1rem;text-decoration:none;line-height:1.1}
+.qbar a{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 6px;border-radius:var(--r-pill);font-weight:700;font-size:.94rem;text-decoration:none;line-height:1.1;white-space:nowrap}.qbar .ico{width:18px;height:18px}
 .qbar .q1{background:var(--amber);color:var(--bark)}
 .qbar .q2{border:1.5px solid rgba(236,235,243,.5);color:var(--mist-100)}
 }
@@ -233,7 +228,7 @@ html{scroll-behavior:auto}
 <header class="top">
 <div class="wrap">
 <a href="https://sakoya-center.com/" aria-label="סקויה, מרחב להתפתחות, לאתר הראשי"><img src="img/logo-leaf.png" alt="סקויה - מרחב להתפתחות" width="58" height="93"></a>
-<a class="back" href="https://sakoya-center.com/">לאתר סקויה<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></a>
+<nav class="top-actions" aria-label="ניווט עליון"><a class="back" href="https://sakoya-center.com/">לענפים הנוספים<span class="hide-sm">&nbsp;של סקויה</span></a><a class="top-cta" href="#contact">צרו קשר</a></nav>
 </div>
 </header>
 
@@ -245,15 +240,6 @@ html{scroll-behavior:auto}
 <span class="label">קבוצה תהליכית · למבוגרים</span>
 <h1 id="h1">חוקרים את העצמי <span>לצד החרדה</span></h1>
 <p class="hero-q">איך היינו מרגישים אם החרדה לא הייתה ״בעיה שצריך להעלים״, אלא חלק ממי שאנחנו שניתן להכיר מקרוב?</p>
-<div class="hero-actions">
-<a class="btn btn-amber" href="https://wa.me/972539312917?text=%D7%A9%D7%9C%D7%95%D7%9D%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%94%D7%A7%D7%91%D7%95%D7%A6%D7%94%20%22%D7%97%D7%95%D7%A7%D7%A8%D7%99%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A2%D7%A6%D7%9E%D7%99%20%D7%9C%D7%A6%D7%93%20%D7%94%D7%97%D7%A8%D7%93%D7%94%22" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>לשליחת הודעה בוואטסאפ</a>
-<a class="btn btn-ghost" href="#contact">השאירו פרטים ונחזור אליכם</a>
-</div>
-<ul class="chips" aria-label="תמצית הקבוצה">
-<li>נפתחת ב-30.12</li>
-<li>12 מפגשים שבועיים</li>
-<li>כ-8 משתתפים ומשתתפות</li>
-</ul>
 </div>
 <div class="art" aria-hidden="true"><img src="img/rings-light.png" alt="" width="560" height="534"></div>
 </div>
