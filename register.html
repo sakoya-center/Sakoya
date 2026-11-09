@@ -578,7 +578,7 @@ var want=(location.search.match(/[?&]event=([^&#]+)/)||[])[1];want=want?decodeUR
 function iso(s){return '⁦'+s+'⁩'}
 function when(e){var p=e.date.split('-');return (p[2]*1)+'.'+(p[1]*1)+' · '+e.day+' · '+iso(e.start+'–'+e.end)}
 function places(n){return n===1?'נותר מקום אחד':n===2?'נותרו שני מקומות':'נותרו '+n+' מקומות'}
-function avail(e){if(e.open===false)return{t:'ההרשמה באתר נסגרה',c:'closed',dis:true,wait:false};
+function avail(e){if(SOON)return{t:'ההרשמה תיפתח בקרוב',c:'closed',dis:true,wait:false};if(e.open===false)return{t:'ההרשמה באתר נסגרה',c:'closed',dis:true,wait:false};
 if(e.remaining<=0)return{t:'מלאה · רשימת המתנה',c:'full',dis:false,wait:true};
 if(e.remaining<=5)return{t:places(e.remaining),c:'few',dis:false,wait:false};
 return{t:'יש מקום',c:'ok',dis:false,wait:false}}
@@ -601,7 +601,7 @@ lb.appendChild(el('span','pc-t',e.name));
 if(e.blurb)lb.appendChild(el('span','pc-b',e.blurb));
 lb.appendChild(el('span','pc-m',when(e)+(hasRange(e)?' · '+range(e):'')));
 if(f===false)lb.appendChild(el('span','wp-a closed','לא מתאימה לגיל שהוזן'));else if(a.t)lb.appendChild(el('span','wp-a '+a.c,a.t));
-var ft=el('span','pc-ft'),pr=el('span','pc-p',e.price+' ש״ח');ft.appendChild(pr);ft.appendChild(el('span','pc-go',sel[e.id]?'נבחרה ✓':(a.wait?'רשימת המתנה':'בחירה')));lb.appendChild(ft);
+var ft=el('span','pc-ft'),pr=el('span','pc-p',e.price+' ש״ח');ft.appendChild(pr);ft.appendChild(el('span','pc-go',sel[e.id]?'נבחרה ✓':(SOON?'בקרוב':a.wait?'רשימת המתנה':'בחירה')));lb.appendChild(ft);
 list.appendChild(lb)});update()}
 function hasCats(){var m={};EVS.forEach(function(e){if(e.category)m[e.category]=1});return Object.keys(m).length>1}
 function buildChips(){chips.innerHTML='';if(!hasCats()){chips.hidden=true;return}chips.hidden=false;var m=[];EVS.forEach(function(e){if(e.category&&m.indexOf(e.category)<0)m.push(e.category)});
@@ -609,7 +609,7 @@ function buildChips(){chips.innerHTML='';if(!hasCats()){chips.hidden=true;return
 function update(){
 var items=priced(),c=items.length;
 var needAge=chosen().some(hasRange),anyRange=EVS.some(hasRange);
-agebox.hidden=!(anyRange);
+agebox.hidden=!(anyRange)||SOON;
 agehint.textContent=needAge?'הגיל נדרש כדי לוודא שהפעילות מתאימה.':'לפעילויות שמיועדות לגיל מסוים נבקש גיל.';
 [].slice.call(list.querySelectorAll('.pc')).forEach(function(l){var i=l.querySelector('input'),id=i.getAttribute('data-id'),on=!!sel[id];l.classList.toggle('sel',on);var g=l.querySelector('.pc-go');if(g&&!l.classList.contains('off'))g.textContent=on?'נבחרה ✓':(avail(EV[id]).wait?'רשימת המתנה':'בחירה')});
 checkout.hidden=!c;cart.hidden=!c;tot.innerHTML='';sumUl.innerHTML='';
@@ -650,7 +650,7 @@ points();$('r-load').hidden=true;
 if(!EVS.length){$('r-none').hidden=false;return}
 shop.hidden=false;buildChips();if(want&&EV[want]&&!avail(EV[want]).dis)sel[want]=true;payHint();renderList();
 if(want&&EV[want])setTimeout(function(){var a=$('r-age');if(!agebox.hidden&&hasRange(EV[want]))a.focus({preventScroll:true})},0)}
-function load(){if(SOON){$('r-load').hidden=true;$('r-none').innerHTML='ההרשמה באתר תיפתח בקרוב. בינתיים אפשר <a href="https://wa.me/972539312917" target="_blank" rel="noopener">לכתוב לנו בוואטסאפ</a> ונשמור לכם מקום.';$('r-none').hidden=false;return}
+function load(){if(SOON){$('r-none').innerHTML='ההרשמה באתר תיפתח בקרוב. בינתיים אפשר <a href="https://wa.me/972539312917" target="_blank" rel="noopener">לכתוב לנו בוואטסאפ</a> ונשמור לכם מקום.';$('r-none').hidden=false;init({events:DEMO_EVS.slice(0,3),settings:{}});return}
 if(DEMO){$('r-demo').hidden=false;init({events:DEMO_EVS,settings:{}});return}
 fetch(API+'?action=events').then(function(r){return r.json()}).then(function(d){if(!d||!d.ok)throw 0;init(d)}).catch(function(){$('r-load').textContent='לא הצלחנו לטעון את הפעילויות. אפשר לרענן את הדף, או לכתוב לנו בוואטסאפ.'})}
 load();
