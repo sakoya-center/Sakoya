@@ -328,6 +328,16 @@ input,textarea{cursor:text!important}
 @media(max-width:968px){.gallery-grid.g4{grid-template-columns:1fr 1fr}.gallery-grid.g4 .gi:last-child{grid-column:auto}}
 .pull.pull-long blockquote p{font-size:clamp(1.35rem,2.4vw,1.9rem);line-height:1.35;max-width:820px;margin:0 auto}
 @supports(min-height:100svh){.hero{min-height:100svh}}
+/* טאבלט במצב אופקי: כל הפתיח (לוגו, כותרת וכפתורים) נכנס במסך אחד */
+@media(min-width:769px) and (max-height:860px) and (pointer:coarse){
+.hero{padding:96px 40px 44px}
+.hero-logo img{height:118px}
+.hero h1{margin:-6px auto 12px;font-size:clamp(2.2rem,4.2vw,3.2rem)}
+.hero p.hero-sub{margin-bottom:20px;font-size:19px}
+.hero-contact{flex-direction:row;justify-content:center;flex-wrap:wrap;gap:12px}
+.hero-contact .hero-cta,.hero-contact .hero-call-btn{width:auto;min-width:230px}
+.hero-explore{margin-top:16px}
+}
 .groups-photo.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;aspect-ratio:auto;background:none;box-shadow:none;border-radius:0;overflow:visible}
 .groups-photo.duo img{aspect-ratio:16/10;height:auto;border-radius:var(--r-lg);box-shadow:var(--shadow-md);object-position:50% 50%}
 @media(max-width:768px){.groups-photo.duo{grid-template-columns:1fr;gap:12px}}
