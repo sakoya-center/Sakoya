@@ -435,6 +435,18 @@ footer{background:var(--pine)}
 .reg-cta{display:grid;gap:12px;align-content:start;text-align:center}.reg-cta h3{font-size:1.9rem}.reg-cta .btn{width:100%}
 @media(max-width:960px){.reg-grid{grid-template-columns:1fr;gap:36px}}
 @media(max-width:720px){.fg label.wp{grid-template-columns:auto 1fr}.wp-p{grid-column:2;text-align:right}.wp-a{grid-column:2;justify-self:start}.wp input{grid-row:1/4}.rdone h3{font-size:1.6rem}}
+
+/* ---- סדנאות שהתקיימו / מועדים נוספים ---- */
+.pdone{display:block;font-style:normal;font-size:.82rem;font-weight:700;margin-top:2px}
+.hero-dates li.past a{opacity:.62}
+.agebar li.past{opacity:.6}
+.agebar li.past b,.hero-dates li.past b{text-decoration:line-through;text-decoration-thickness:1.5px}
+.ws.done .ws-side,.ws.done .ws-main{opacity:.72}
+.ws.done .ws-photo img{filter:grayscale(.55)}
+.ws-badge{display:block;width:fit-content;margin:0 0 14px;padding:4px 14px;border-radius:var(--r-pill);background:var(--pine);color:var(--mist-100);font-weight:700;font-size:.92rem}
+.ws-donemsg{font-weight:700;color:var(--pine)}
+.ws-more{margin-top:26px;padding:16px 22px;border-radius:var(--r-lg);background:var(--butter-200);color:var(--bark);font-weight:700;max-width:46em}
+.ws-more a{color:var(--pine)}
 </style>
 </head>
 <body>
@@ -527,6 +539,7 @@ footer{background:var(--pine)}
 <h2 id="h-ws">איזו סדנה מתאימה לגיל של התינוק או התינוקת?</h2>
 </div>
 
+<p class="ws-more" id="ws-more" hidden>מועדים נוספים ייקבעו בהמשך. <a href="#contact">השאירו פרטים</a> ונעדכן אתכן ברגע שייפתחו.</p>
 <ol class="agebar reveal">
 <li class="ab1"><b dir="ltr">17.12</b><span>לגילאי 0–6 חודשים</span></li>
 <li class="ab2"><b dir="ltr">24.12</b><span>לגילאי 6–12 חודשים</span></li>
@@ -782,6 +795,51 @@ var f=document.getElementById('gform');
 if(f&&window.fetch){f.addEventListener('submit',function(ev){ev.preventDefault();
 var b=f.querySelector('button[type=submit]'),er=document.getElementById('gerr');b.disabled=true;er.style.display='none';
 fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(!r.ok)throw 0;f.style.display='none';var ok=document.getElementById('gok');ok.style.display='block';ok.focus()}).catch(function(){b.disabled=false;er.style.display='block'})})}
+})();
+</script>
+<script>
+/* מצב הסדנאות לפי התאריך הנוכחי בישראל. בלי גוגל, בלי שרת. */
+(function(){
+function nowIL(){
+ try{var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Jerusalem',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date()),o={};
+ p.forEach(function(x){o[x.type]=x.value});return Date.UTC(+o.year,+o.month-1,+o.day,+o.hour,+o.minute)}catch(e){var d=new Date();return Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),d.getHours(),d.getMinutes())}}
+var q=location.search.match(/[?&]today=(\d{4})-(\d\d)-(\d\d)(?:T(\d\d):(\d\d))?/);
+var NOW=q?Date.UTC(+q[1],+q[2]-1,+q[3],+(q[4]||12),+(q[5]||0)):nowIL();
+var CLOSE_H=24,H=3600000,states={},total=0,ended=0;
+[].slice.call(document.querySelectorAll('article.ws')).forEach(function(a){
+ var t=a.querySelector('.ws-date time');if(!t)return;
+ var d=t.getAttribute('datetime').split('-'),w=a.querySelector('.ws-when'),m=w&&w.textContent.match(/(\d\d):(\d\d)\D+(\d\d):(\d\d)/)||[0,10,30,12,30];
+ var st=Date.UTC(+d[0],+d[1]-1,+d[2],+m[1],+m[2]),en=Date.UTC(+d[0],+d[1]-1,+d[2],+m[3],+m[4]);
+ var s=NOW>=en?'done':(NOW>=st-CLOSE_H*H?'closed':'open');
+ states[a.id]=s;total++;if(s==='done')ended++;
+ if(s==='open')return;
+ var foot=a.querySelector('.ws-foot'),pick=a.querySelector('.pick'),wa=foot&&foot.querySelector('a.link');
+ if(s==='done'){a.classList.add('done');
+  var b=document.createElement('span');b.className='ws-badge';b.textContent='הסדנה התקיימה';if(w)w.parentNode.insertBefore(b,w.nextSibling);
+  if(pick){var msg=document.createElement('p');msg.className='ws-donemsg';msg.innerHTML='הסדנה התקיימה. מועדים נוספים ייקבעו בהמשך. <a class="link" href="#contact">השאירו פרטים ונעדכן</a>';pick.replaceWith(msg)}
+  if(wa)wa.textContent='רוצות לשמוע על מועדים חדשים? כתבו לנו בוואטסאפ';
+ }else{
+  if(pick){var c=document.createElement('p');c.className='ws-donemsg';c.textContent='ההרשמה באתר נסגרה. אפשר לפנות אלינו בוואטסאפ ונבדוק אם נשאר מקום.';pick.replaceWith(c)}
+ }
+ var id=a.id;
+ [].slice.call(document.querySelectorAll('a[href="#'+id+'"]')).forEach(function(l){var li=l.closest('li');if(li&&s==='done'){li.classList.add('past');var sp=li.querySelector('span');if(sp&&!sp.querySelector('.pdone')){var e=document.createElement('em');e.className='pdone';e.textContent='התקיימה';sp.appendChild(e)}}});
+});
+[].slice.call(document.querySelectorAll('.agebar li')).forEach(function(li,i){var ids=['ws-communication','ws-gestures','ws-books'];if(states[ids[i]]==='done'){li.classList.add('past');var sp=li.querySelector('span');if(sp&&!sp.querySelector('.pdone')){var e=document.createElement('em');e.className='pdone';e.textContent='התקיימה';sp.appendChild(e)}}});
+if(!ended)return;
+var more=document.getElementById('ws-more');if(more)more.hidden=false;
+if(ended<total)return;
+/* כל הסדנאות עברו */
+function T(sel,txt){var e=document.querySelector(sel);if(e)e.textContent=txt}
+T('.hero .label','הסבב הראשון הסתיים · חיפה');
+T('#h-ws','הסדנאות הראשונות התקיימו');
+T('#h-register','מועדים חדשים ייקבעו בהמשך');
+var sub=document.querySelector('#register .sub');if(sub)sub.textContent='הסבב הראשון של הסדנאות לאמהות ולתינוקות הסתיים. השאירו פרטים ונעדכן אתכן ברגע שייקבעו מועדים חדשים.';
+var rp=document.querySelector('#register .reg-points');if(rp)rp.hidden=true;
+var ct=document.querySelector('#register .reg-cta h3');if(ct)ct.textContent='רוצות שנעדכן?';
+var ch=document.querySelector('#register .reg-cta .hint');if(ch)ch.textContent='משאירות פרטים, ונשלח הודעה כשנפתחת הרשמה לסדנאות הבאות.';
+[].slice.call(document.querySelectorAll('a[href="register.html"]')).forEach(function(l){
+ if(l.closest('.qbar,.top-actions,.hero-actions,.reg-cta')){l.setAttribute('href','#contact');l.textContent=l.classList.contains('top-cta')||l.classList.contains('q1')?'עדכון':'להשארת פרטים לעדכון'}});
+var hd=document.querySelector('.hero-dates');if(hd)hd.setAttribute('aria-label','הסדנאות שהתקיימו');
 })();
 </script>
 </body>
